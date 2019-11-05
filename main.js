@@ -12,27 +12,40 @@ async function getMTGData(url) {
 const theData = getMTGData('https://api.magicthegathering.io/v1/cards/')
 .then(data => {
     let cardArr = data.cards;
-    console.log(cardArr)
     for(const card of cardArr)
     {
-        console.log(card)
+        populateDom(card)
     }
 })
 
 console.log(theData)
 
+let mainArea = document.querySelector('main')
 
-// let card = getMTGData()
-// console.log(card)
-// let mainArea = document.querySelector('main')
+function populateDom(card_data)
+{
+    let cardDiv = document.createElement('div')
+    let name = document.createElement('h1')
+    let manaCost = document.createElement('h3')
+    let pic = document.createElement('img')
 
-// let name = document.createElement('h1')
-// let manaCost = document.createElement('h3')
+    cardDiv.setAttribute('class', 'cardDivs')
 
-// name.textContent = card.name
-// manaCost.textContent = card.manaCost
-// console.log(name)
-// console.log(manaCost)
+    name.textContent = card_data.name
+    manaCost.textContent = card_data.manaCost
+    setImage(pic, card_data)
 
-// mainArea.appendChild(name)
-// mainArea.appendChild(manaCost)
+    cardDiv.appendChild(pic)
+    cardDiv.appendChild(name)
+    cardDiv.appendChild(manaCost)
+    
+    mainArea.appendChild(cardDiv)
+
+}
+
+function setImage (img, data)
+{
+    img.src = data.imageUrl
+    img.onerror = function() { img.src="https://starwars-visualguide.com/assets/img/placeholder.jpg" }
+}
+
