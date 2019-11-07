@@ -2,6 +2,11 @@ async function getMTGData(url) {
     try {
         const response = await fetch(url)
         const data = await response.json()
+        // console.log(data.next_page)
+        // if(data.has_more === true)
+        // {
+        //     getMTGData(data.next_page)
+        // }
         return data
     }
     catch(error) {
@@ -9,12 +14,16 @@ async function getMTGData(url) {
     }
 }
 
-const theData = getMTGData('https://api.magicthegathering.io/v1/cards/')
-.then(data => {
-    let cardArr = data.cards;
+
+let theData = getMTGData('https://api.scryfall.com/cards/')
+.then(card_data => {
+    let cardArr = card_data.data;
+    console.log(cardArr)
     for(const card of cardArr)
     {
-        populateDom(card)
+        if(card.type_line.includes("Legendary Creature")) {    
+            populateDom(card)           
+        }
     }
 })
 
@@ -25,27 +34,36 @@ let mainArea = document.querySelector('main')
 function populateDom(card_data)
 {
     let cardDiv = document.createElement('div')
+    let textDiv = document.createElement('div')
     let name = document.createElement('h1')
     let manaCost = document.createElement('h3')
     let pic = document.createElement('img')
 
     cardDiv.setAttribute('class', 'cardDivs')
+    textDiv.setAttribute('class', 'textDivs')
 
     name.textContent = card_data.name
-    manaCost.textContent = card_data.manaCost
+    manaCost.textContent = card_data.mana_cost
     setImage(pic, card_data)
 
     cardDiv.appendChild(pic)
-    cardDiv.appendChild(name)
-    cardDiv.appendChild(manaCost)
+    textDiv.appendChild(name)
+    textDiv.appendChild(manaCost)
     
+    cardDiv.appendChild(textDiv)
+
     mainArea.appendChild(cardDiv)
 
 }
 
 function setImage (img, data)
 {
-    img.src = data.imageUrl
-    img.onerror = function() { img.src="https://starwars-visualguide.com/assets/img/placeholder.jpg" }
+    if(data.hasOwnProperty('image_uris')) {
+        img.src = data.image_uris.border_crop
+    }
+    else {
+        img.src = "https://starwars-visualguide.com/assets/img/placeholder.jpg"
+    }
+   
 }
 

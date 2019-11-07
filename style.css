@@ -1,0 +1,21 @@
+body {
+    background-color: black;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 500px 500px 500px;
+    grid-gap: 50px;
+    justify-content: center;
+}
+
+.cardDivs {
+    border: 10px solid white;
+    color: black;
+    text-align: center;
+}
+
+.textDivs {
+    background-color: white;
+    height: 100%
+}
