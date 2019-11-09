@@ -17,8 +17,7 @@ async function getMTGData(url) {
 
 let theData = getMTGData('https://api.scryfall.com/cards/')
 .then(card_data => {
-    let cardArr = card_data.data;
-    console.log(cardArr)
+    let cardArr = card_data.data
     for(const card of cardArr)
     {
         if(card.type_line.includes("Legendary Creature")) {    
@@ -53,7 +52,6 @@ function populateDom(card_data)
     cardDiv.appendChild(textDiv)
 
     mainArea.appendChild(cardDiv)
-
 }
 
 function setImage (img, data)
