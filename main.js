@@ -21,6 +21,7 @@ let theData = getMTGData('https://api.scryfall.com/cards/')
     for(const card of cardArr)
     {
         if(card.type_line.includes("Legendary Creature")) {    
+            console.log(card)
             populateDom(card)           
         }
     }
@@ -32,6 +33,7 @@ let mainArea = document.querySelector('main')
 
 function populateDom(card_data)
 {
+    console.log(card_data)
     let cardDiv = document.createElement('div')
     let textDiv = document.createElement('div')
     let name = document.createElement('h1')
@@ -57,7 +59,7 @@ function populateDom(card_data)
 function setImage (img, data)
 {
     if(data.hasOwnProperty('image_uris')) {
-        img.src = data.image_uris.border_crop
+        img.src = data.image_uris.normal
     }
     else {
         img.src = "https://starwars-visualguide.com/assets/img/placeholder.jpg"
