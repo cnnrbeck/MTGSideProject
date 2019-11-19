@@ -15,7 +15,7 @@ async function getMTGData(url) {
 }
 
 
-let theData = getMTGData('https://api.scryfall.com/cards/')
+let theData = getMTGData('https://api.scryfall.com/cards/page1')
 .then(card_data => {
     let cardArr = card_data.data
     for(const card of cardArr)
